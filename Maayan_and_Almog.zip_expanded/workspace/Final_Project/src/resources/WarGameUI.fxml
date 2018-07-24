@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <Pane prefHeight="165.0" prefWidth="686.0" BorderPane.alignment="CENTER">
+         <children>
+            <Group>
+               <children>
+                  <Button layoutX="464.0" layoutY="28.0" mnemonicParsing="false" onAction="#addMissileLauncherDestructor" prefHeight="20.0" prefWidth="220.0" text="Add Missile Launcher Destructor" />
+                  <Button layoutX="464.0" layoutY="1.0" mnemonicParsing="false" onAction="#addMissileLauncher" prefHeight="20.0" prefWidth="220.0" text="Add Missile Launcher" />
+                  <Button layoutX="464.0" layoutY="55.0" mnemonicParsing="false" onAction="#addMissileDestructor" prefHeight="20.0" prefWidth="220.0" text="Add Missile Destructor" />
+                  <Button layoutX="464.0" layoutY="136.0" mnemonicParsing="false" onAction="#destructAMissileLauncher" prefHeight="20.0" prefWidth="220.0" text="Destruct a Missile Launcher" />
+                  <Button layoutX="464.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleLaunchAMissile" prefHeight="20.0" prefWidth="220.0" text="Launch a Missile" />
+                  <Button layoutX="464.0" layoutY="109.0" mnemonicParsing="false" onAction="#destructAMissile" prefHeight="20.0" prefWidth="220.0" text="Destruct a Missile" />
+               </children>
+            </Group>
+            <Separator layoutX="378.0" layoutY="1.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="86.0" />
+            <Group>
+               <children>
+                  <Label layoutX="8.0" layoutY="108.0" prefHeight="27.0" prefWidth="190.0" text="Missile Launchers Destructed:" textAlignment="JUSTIFY" />
+                  <TextField fx:id="missileHit" layoutX="210.0" layoutY="82.0" />
+                  <Label layoutX="8.0" prefHeight="27.0" prefWidth="190.0" text="Missile Launched:" textAlignment="CENTER" />
+                  <Label layoutX="8.0" layoutY="135.0" prefHeight="27.0" prefWidth="190.0" text="Total Economic Damage:" textAlignment="JUSTIFY" />
+                  <TextField fx:id="missileLaunched" layoutX="210.0" layoutY="1.0" />
+                  <Label layoutX="8.0" layoutY="81.0" prefHeight="27.0" prefWidth="190.0" text="Missile Hit:" textAlignment="JUSTIFY" />
+                  <Label layoutX="8.0" layoutY="27.0" prefHeight="27.0" prefWidth="190.0" text="Missile Destructed:" textAlignment="CENTER" />
+                  <TextField fx:id="missileDestructed" layoutX="210.0" layoutY="28.0" />
+                  <TextField fx:id="totalDamage" layoutX="210.0" layoutY="136.0" />
+                  <TextField fx:id="missileLaunchersDestructed" layoutX="210.0" layoutY="109.0" />
+                  <Label layoutX="8.0" layoutY="54.0" prefHeight="27.0" prefWidth="190.0" text="Missile Missed:" textAlignment="JUSTIFY" />
+                  <TextField fx:id="missileMissed" layoutX="210.0" layoutY="55.0" />
+               </children>
+            </Group>
+         </children>
+      </Pane>
+   </bottom>
+   <center>
+      <GridPane fx:id="mainGrid" prefHeight="408.0" prefWidth="592.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="528.0" minWidth="10.0" prefWidth="104.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="528.0" minWidth="10.0" prefWidth="104.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="528.0" minWidth="10.0" prefWidth="102.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="528.0" minWidth="10.0" prefWidth="298.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="473.0" minWidth="10.0" prefWidth="146.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </center>
+</BorderPane>
