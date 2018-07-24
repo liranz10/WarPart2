@@ -10,6 +10,6 @@
 	<classpathentry kind="lib" path="workspace/Final_Project/com.fasterxml.jackson.annotations.jar"/>
 	<classpathentry kind="lib" path="workspace/Final_Project/com.fasterxml.jackson.core.jar"/>
 	<classpathentry kind="lib" path="workspace/Final_Project/com.fasterxml.jackson.databind.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Liran/WarGamePart2Final/Maayan_and_Almog.zip_expanded/workspace/Final_Project/mysql-connector-java-5.1.46.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Liran/git/WarPart2/Maayan_and_Almog.zip_expanded/workspace/Final_Project/mysql-connector-java-5.1.46.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

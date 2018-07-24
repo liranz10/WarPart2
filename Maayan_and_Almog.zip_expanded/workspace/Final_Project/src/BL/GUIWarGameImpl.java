@@ -1,6 +1,8 @@
 package BL;
 
 import Entities.*;
+import GameServer.WarListener;
+import GameServer.WarServer;
 import Interfaces.AnimationParametersInterface;
 import Interfaces.AnimationsInterface;
 import Interfaces.WarGameInterface;
@@ -35,13 +37,17 @@ import static Entities.War.create;
 import static Entities.War.timeSinceGameStartedInSeconds;
 import static Entities.WarInformation.eCALLER_FUNCTION.*;
 
-public class GUIWarGameImpl extends Application implements WarGameInterface, AnimationsInterface {
+public class GUIWarGameImpl extends Application implements WarGameInterface, AnimationsInterface,WarListener {
 
     public enum eDirection { LEFT, RIGHT }
     @JsonIgnore
     private boolean guiLoadedSuccesfully;
     @JsonIgnore
     private War war;
+    @JsonIgnore
+	private WarServer warServer;
+    
+    
     @JsonIgnore
     private Stage stage;
     @FXML
@@ -77,6 +83,10 @@ public class GUIWarGameImpl extends Application implements WarGameInterface, Ani
             war.getWarInformation().addObserver(new StatisticsUpdater());
 
         }
+        warServer = new WarServer();
+		Thread warThread = new Thread(warServer);
+		warServer.registerListener(this);
+		warThread.start();
     }
 
     @Override
@@ -461,5 +471,24 @@ public class GUIWarGameImpl extends Application implements WarGameInterface, Ani
 
         }
     }
+
+	@Override
+	public void addMissileLauncherEvent() {
+		Platform.runLater(() -> {
+		addMissileLauncher();
+		});
+	}
+
+	@Override
+	public void launchMissileEvent() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void destructMissileEvent() {
+		// TODO Auto-generated method stub
+
+	}
 
 }
