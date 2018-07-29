@@ -480,14 +480,19 @@ public class GUIWarGameImpl extends Application implements WarGameInterface, Ani
 	}
 
 	@Override
-	public void launchMissileEvent() {
-		// TODO Auto-generated method stub
+	public void launchMissileEvent(String destination) {
+		Platform.runLater(() -> {
+			launchAMissile(destination);
+			});
 
 	}
 
 	@Override
 	public void destructMissileEvent() {
-		// TODO Auto-generated method stub
+		Platform.runLater(() -> {
+			destructAMissile();
+			});
+
 
 	}
 

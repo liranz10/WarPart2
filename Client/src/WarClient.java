@@ -62,7 +62,10 @@ public class WarClient implements WarClientIface {
 
 	@Override
 	public void launchMissile() {
-		toNetOutputStream.println("launchMissile");
+		System.out.println("Enter Destination:");
+		String dest = scanner.next();
+		toNetOutputStream.println("launchMissile#"+dest);
+		
 	}
 
 	@Override

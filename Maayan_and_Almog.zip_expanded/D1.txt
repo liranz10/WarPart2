@@ -1,2 +1,1 @@
-18/07/2018 11:17:39: 	Missile destructor: D1 Missile: M2 was not destructed, Damage: 6593 time: 58
-18/07/2018 11:17:44: 	Missile destructor: D1 Missile: M2 was destructed time: 62
+29/07/2018 09:27:29: 	Missile destructor: D1 Missile: M2 was destructed time: 51
