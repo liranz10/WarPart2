@@ -12,7 +12,7 @@ import Interfaces.LoggerSetupInterface;
 import Interfaces.StartGameWithWarInterface;
 import com.fasterxml.jackson.annotation.*;
 
-import DAL.SqlDataService;
+import DAL.IDataService;
 
 import java.util.Observable;
 
@@ -50,7 +50,7 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
     public Launcher(Observer observer, boolean isHidden, War war) {
         setIsHidden(isHidden);
         setId("L" + (++idNumerator));
-        SqlDataService.getInstance().saveMissileLauncher(id, isHidden);
+        War.getDBservice().saveMissileLauncher(id, isHidden);
         startGame(observer, war);
     }
 
@@ -98,7 +98,7 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
 
     public synchronized void launchAMissle(String destination) {
         Missile m = new Missile(destination);
-		SqlDataService.getInstance().saveMissileLauncherMissile(m.getId(),m.getDestination(),m.getLaunchTime(),m.getFlyTime(),m.getDamage(),getId());
+        War.getDBservice().saveMissileLauncherMissile(m.getId(),m.getDestination(),m.getLaunchTime(),m.getFlyTime(),m.getDamage(),getId());
 		
         lock.lock();
         missile.add(m);
@@ -204,7 +204,7 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
                                 war.getWarInformation().incrementMissilesMissed();
                                 logMsg += " Hit time: " + hitTime + " (Missed)";
                             }
-                            SqlDataService.getInstance().saveMissileResult(m.getId(),m.isHit());
+                            War.getDBservice().saveMissileResult(m.getId(),m.isHit());
                             war.getWarInformation().getLogger().info(logMsg);
                         }
                     }

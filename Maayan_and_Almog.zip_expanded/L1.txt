@@ -1,2 +1,0 @@
-29/07/2018 09:26:50: 	Launcher L1 launches Missile M1: desination: #gaza Expected Launch time: 12 Actual launch time: 12 Hit time: 12 (Missed)
-29/07/2018 09:27:29: 	Launcher L1 launches Missile M2: desination: ù Expected Launch time: 42 Actual launch time: 42 Destruction time: 51

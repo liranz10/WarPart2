@@ -1,7 +1,8 @@
 package Entities;
 
 import BL.GUIWarGameImpl;
-import DAL.SqlDataService;
+import DAL.IDataService;
+import DAL.MongoDataService;
 import GameServer.WarListener;
 import GameServer.WarServer;
 import Interfaces.*;
@@ -13,8 +14,11 @@ import java.io.*;
 import java.util.Observer;
 import java.util.Scanner;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 public class War implements MissileDestructorWithoutObjectInterface, MissileLauncherInterface,
-		MissileLauncherDestructorWithoutObjectInterface, StartGameWithoutWarInterface {
+MissileLauncherDestructorWithoutObjectInterface, StartGameWithoutWarInterface {
 
 	@JsonIgnore
 	public static long GAME_START_TIME;
@@ -34,14 +38,16 @@ public class War implements MissileDestructorWithoutObjectInterface, MissileLaun
 	private MissileLauncherDestructors missileLauncherDestructors = new MissileLauncherDestructors();
 	@JsonIgnore
 	public static PrintStream stdOut = new PrintStream(System.out);
-	
+	@JsonIgnore
+	private static IDataService dbService;
 	private War() {
+
 	}
 
 	public static War loadWarGameFromJsonFile(String filename) {
 		ObjectMapper mapper = new ObjectMapper();
 		War war;
-
+		
 		try {
 			war = mapper.readValue(new File(filename), War.class);
 		} catch (IOException e) {
@@ -56,44 +62,45 @@ public class War implements MissileDestructorWithoutObjectInterface, MissileLaun
 		War war;
 
 		consoleGame = isConsoleGame;
-		
-		
+
+		ApplicationContext  applicationContext = new ClassPathXmlApplicationContext("configType.xml");
+		dbService =(IDataService)applicationContext.getBean("theDBservice");
 		System.out.println("Would you like to load the game properties from a file? (yes/no)");
 		String shouldLoadFromFile = s.nextLine();
 
 		if (shouldLoadFromFile.equalsIgnoreCase("yes")) {
 			war = loadWarGameFromJsonFile(
-					"C:\\Users\\Liran\\git\\WarPart2\\Maayan_and_Almog.zip_expanded\\workspace\\Final_Project\\properties.json");
+					"C:\\Users\\win10\\git\\WarPart2\\Maayan_and_Almog.zip_expanded\\workspace\\Final_Project\\properties.json");
 			for (Launcher launcher : war.missileLaunchers.getLauncher()) {
-				SqlDataService.getInstance().saveMissileLauncher(launcher.getId(), launcher.getIsHidden());
+				dbService.getInstance().saveMissileLauncher(launcher.getId(), launcher.getIsHidden());
 				for (Missile missile : launcher.getMissile()) {
-					SqlDataService.getInstance().saveMissileLauncherMissile(missile.getId(), missile.getDestination(),
+					dbService.getInstance().saveMissileLauncherMissile(missile.getId(), missile.getDestination(),
 							missile.getLaunchTime(), missile.getFlyTime(), missile.getDamage(), launcher.getId());
 				}
 			}
 
 			for (Destructor_ destructor_ : war.missileLauncherDestructors.getDestructor()) {
-				SqlDataService.getInstance().saveMissileLauncherDestructor(destructor_.getType());
+				dbService.getInstance().saveMissileLauncherDestructor(destructor_.getType());
 				for (DestructedLauncher destructedLauncher : destructor_.getDestructedLauncher()) {
-					SqlDataService.getInstance().saveDestructedLauncher(destructedLauncher.getId(),
+					dbService.getInstance().saveDestructedLauncher(destructedLauncher.getId(),
 							destructor_.getType(), destructedLauncher.getDestructTime());
 				}
 			}
 			for (Destructor destructor : war.missileDestructors.getDestructor()) {
-				SqlDataService.getInstance().saveMissileDestructor(destructor.getId());
+				dbService.getInstance().saveMissileDestructor(destructor.getId());
 				for (DestructedMissile destructedMissile : destructor.getDestructedMissile()) {
-					SqlDataService.getInstance().saveDestructedMissile(destructor.getId(), destructedMissile.getId(),
+					dbService.getInstance().saveDestructedMissile(destructor.getId(), destructedMissile.getId(),
 							destructedMissile.getDestructAfterLaunch());
 				}
 			}
 
 		} else {
 			war = new War();
-	
+
 
 		}
 
-		
+
 		return war;
 	}
 
@@ -180,6 +187,10 @@ public class War implements MissileDestructorWithoutObjectInterface, MissileLaun
 
 	public static void setStartGameTime() {
 		GAME_START_TIME = System.currentTimeMillis();
+	}
+
+	public static IDataService getDBservice() {
+		return dbService.getInstance();
 	}
 
 	@Override

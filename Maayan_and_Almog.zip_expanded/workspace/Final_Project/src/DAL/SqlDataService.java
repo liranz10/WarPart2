@@ -16,7 +16,7 @@ public class SqlDataService implements IDataService {
 
 	private SqlDataService() {
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/war?user=root&password=");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/war?user=root&password=adva6767");
 			// reset db
 //		    PreparedStatement stmt = conn.prepareStatement("SELECT Concat('TRUNCATE TABLE ',table_schema,'.',TABLE_NAME, ';') as Command \r\n" + 
 //		    		"FROM INFORMATION_SCHEMA.TABLES where  table_schema in ('war');");
@@ -32,7 +32,7 @@ public class SqlDataService implements IDataService {
 		}
 	}
 
-	public static SqlDataService getInstance() {
+	public  IDataService getInstance() {
 		SqlDataService result = theService;
 		if (result == null) {
 			synchronized (mutex) {

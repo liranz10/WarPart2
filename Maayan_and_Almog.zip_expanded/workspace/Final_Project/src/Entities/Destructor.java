@@ -16,7 +16,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import DAL.SqlDataService;
+import DAL.IDataService;
+import DAL.MongoDataService;
 
 import org.aspectj.lang.annotation.Aspect;
 
@@ -48,7 +49,7 @@ public class Destructor extends Observable implements LoggerSetupInterface, Star
 
     public Destructor(Observer observer, int id, War war) {
         setId("D" + id);
-        SqlDataService.getInstance().saveMissileDestructor(getId());
+        War.getDBservice().saveMissileDestructor(getId());
         startGame(observer, war);
     }
 
@@ -86,7 +87,7 @@ public class Destructor extends Observable implements LoggerSetupInterface, Star
             lock.lock();
             DestructedMissile dm = new DestructedMissile(m.getId());
             destructedMissile.add(dm);
-			SqlDataService.getInstance().saveDestructedMissile(this.getId(),dm.getId(),dm.getDestructAfterLaunch());
+            War.getDBservice().saveDestructedMissile(this.getId(),dm.getId(),dm.getDestructAfterLaunch());
 
             Collections.sort(destructedMissile);
             lock.unlock();
@@ -169,7 +170,7 @@ public class Destructor extends Observable implements LoggerSetupInterface, Star
                             }
 
                             war.getWarInformation().getLogger().info(logMsg);
-                        	SqlDataService.getInstance().saveDestructMissileResult(getId(),dm.getId(),dm.getDestructAfterLaunch(),dm.success());
+                            War.getDBservice().saveDestructMissileResult(getId(),dm.getId(),dm.getDestructAfterLaunch(),dm.success());
 
                         }
                     }

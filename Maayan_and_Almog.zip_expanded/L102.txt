@@ -1,5 +1,2 @@
-24/07/2018 12:55:29: 	Launcher L102 launches Missile M3: desination: Ofakim Expected Launch time: 4 Actual launch time: 4 Hit time: 7 (Missed)
-24/07/2018 12:55:38: 	Launcher L102 launches Missile M4: desination: Beer-Sheva Expected Launch time: 9 Actual launch time: 9 Hit time: 16 (Missed)
-24/07/2018 12:56:22: 	Launcher L102 launches Missile M5: desination: gaza Expected Launch time: 47 Actual launch time: 47 Hit time: 60 (Missed)
-24/07/2018 12:56:30: 	Launcher L102 launches Missile M6: desination: lil Expected Launch time: 55 Actual launch time: 60 Hit time: 67 Damage: 3949 (Hit)
-24/07/2018 12:56:31: 	Launcher L102 launches Missile M7: desination: lol Expected Launch time: 66 Actual launch time: 67 Hit time: 68 (Missed)
+29/07/2018 15:09:07: 	Launcher L102 launches Missile M3: desination: Ofakim Expected Launch time: 4 Actual launch time: 4 Hit time: 7 (Missed)
+29/07/2018 15:09:11: 	Launcher L102 launches Missile M4: desination: Beer-Sheva Expected Launch time: 9 Actual launch time: 9 Destruction time: 11

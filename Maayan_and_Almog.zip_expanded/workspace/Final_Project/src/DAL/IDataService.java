@@ -2,6 +2,7 @@ package DAL;
 
 public interface IDataService {
 
+	IDataService getInstance();
 	void saveMissileLauncher(String id, boolean isHidden);
 
 	void saveMissileDestructor(String id);

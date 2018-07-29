@@ -68,7 +68,7 @@ public class WarServer implements Runnable {
 			}
 		} else if (operation.contains("launchMissile")) {
 			for (WarListener warListener : listeners) {
-				warListener.launchMissileEvent(operation.substring(operation.indexOf("#")));
+				warListener.launchMissileEvent(operation.substring(operation.indexOf("#")+1));
 			}
 		} else if (operation.equals("destructMissile")) {
 			for (WarListener warListener : listeners) {

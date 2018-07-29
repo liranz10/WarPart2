@@ -9,7 +9,8 @@ import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
 import BL.GUIWarGameImpl;
-import DAL.SqlDataService;
+import DAL.IDataService;
+import DAL.MongoDataService;
 import Interfaces.LoggerSetupInterface;
 import Interfaces.StartGameWithWarInterface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,13 +42,13 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
     private ReentrantReadWriteLock iteratorLock = new ReentrantReadWriteLock(true);
     @JsonIgnore
     private Lock lock = iteratorLock.writeLock();
-
+    
     public Destructor_() {}
 
     public Destructor_(Observer observer, int id, War war) {
         int index = (int) (Math.random() * eTYPES.values().length);
         setType(eTYPES.values()[index].toString() + id);
-        SqlDataService.getInstance().saveMissileLauncherDestructor(getType());
+        War.getDBservice().saveMissileLauncherDestructor(getType());
         startGame(observer, war);
     }
 
@@ -75,7 +76,7 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
         Launcher launcher = war.getMissileLaunchers().findRandomLauncher();
         if (launcher != null) {
             DestructedLauncher dl = new DestructedLauncher(launcher.getId(), War.timeSinceGameStartedInSeconds());
-    		SqlDataService.getInstance().saveDestructedLauncher(dl.getId(),getType(),dl.getDestructTime());
+            War.getDBservice().saveDestructedLauncher(dl.getId(),getType(),dl.getDestructTime());
 
             if (!destructedLauncher.contains(dl)) {
                 lock.lock();
@@ -199,7 +200,7 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
                             }
 
                             war.getWarInformation().getLogger().info(logMsg);
-                        	SqlDataService.getInstance().saveDestructLauncherResult(dl.getId(),getType(),dl.getDestructTime(),dl.isHit());
+                            War.getDBservice().saveDestructLauncherResult(dl.getId(),getType(),dl.getDestructTime(),dl.isHit());
 
                         }
                     }
