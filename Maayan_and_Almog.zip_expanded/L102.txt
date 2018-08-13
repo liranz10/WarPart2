@@ -1,2 +1,0 @@
-29/07/2018 15:09:07: 	Launcher L102 launches Missile M3: desination: Ofakim Expected Launch time: 4 Actual launch time: 4 Hit time: 7 (Missed)
-29/07/2018 15:09:11: 	Launcher L102 launches Missile M4: desination: Beer-Sheva Expected Launch time: 9 Actual launch time: 9 Destruction time: 11

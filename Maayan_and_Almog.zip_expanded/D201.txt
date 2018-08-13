@@ -1,2 +1,1 @@
-29/07/2018 15:09:11: 	Missile destructor: D201 Missile: M4 was destructed time: 11
-29/07/2018 15:09:16: 	Missile destructor: D201 Missile: M1 was not destructed, Damage: 1500 time: 16
+08/08/2018 13:08:50: 	Missile destructor: D201 Missile: M4 was not destructed, Damage: 1000 time: 3

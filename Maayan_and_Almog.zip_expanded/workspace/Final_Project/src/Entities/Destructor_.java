@@ -143,6 +143,7 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
     }
 
     private class MissileLauncherDestructorThread implements Runnable {
+    	private String logMsg;
         @Override
         public void run() {
 
@@ -183,16 +184,18 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
 
                             Thread.currentThread().sleep(flyTime * war.MILLISECOND_IN_SECOND);
 
-                            String logMsg = "Launcher destructor: " + getType() + " Missile launcher: " + launcher.getId();
+                            launcherDestructorStart(getType(),launcher.getId());
 
                             if (!launcher.getIsHidden() && !launcher.isHit() && Math.random() > 0.3) {
                                 dl.setHit(true);
+                                
                                 logMsg += " was destructed time: " + War.timeSinceGameStartedInSeconds();
                                 launcher.setHit(true);
                                 war.getMissileLaunchers().removeLauncher(launcher);
                                 war.getWarInformation().incrementMissilesLaunchersDestructed();
                             }
                             else if (!launcher.getIsHidden()) {
+                            	
                                 logMsg += " was not destructed time: " + War.timeSinceGameStartedInSeconds();
                             }
                             else {
@@ -210,6 +213,12 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
                 }
             }
         }
+		private void launcherDestructorStart(String type, String id) {
+			
+            logMsg = "Launcher destructor: " + type + " Missile launcher: " + id;
+            System.out.println(logMsg);
+			
+		}
     }
 
 

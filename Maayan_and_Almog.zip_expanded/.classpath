@@ -6,7 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="workspace/Final_Project/src"/>
-	<classpathentry kind="lib" path="workspace/Final_Project/aspectjrt.jar"/>
 	<classpathentry kind="lib" path="workspace/Final_Project/com.fasterxml.jackson.annotations.jar"/>
 	<classpathentry kind="lib" path="workspace/Final_Project/com.fasterxml.jackson.core.jar"/>
 	<classpathentry kind="lib" path="workspace/Final_Project/com.fasterxml.jackson.databind.jar"/>

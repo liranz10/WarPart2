@@ -1,2 +1,0 @@
-29/07/2018 15:09:19: 	Launcher destructor: shipA Missile launcher: L102 was not destructed (Hidden) time: 19
-29/07/2018 15:09:24: 	Launcher destructor: shipA Missile launcher: L102 was not destructed (Hidden) time: 24

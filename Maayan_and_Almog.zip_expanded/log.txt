@@ -1,10 +1,1 @@
-29/07/2018 15:09:07: 	Launcher L102 launches Missile M3: desination: Ofakim Expected Launch time: 4 Actual launch time: 4 Hit time: 7 (Missed)
-29/07/2018 15:09:08: 	Missile destructor: D202 Missile: M2 was not destructed, Damage: 2000 time: 9
-29/07/2018 15:09:11: 	Missile destructor: D201 Missile: M4 was destructed time: 11
-29/07/2018 15:09:11: 	Launcher L102 launches Missile M4: desination: Beer-Sheva Expected Launch time: 9 Actual launch time: 9 Destruction time: 11
-29/07/2018 15:09:13: 	Launcher L101 launches Missile M1: desination: Sderot Expected Launch time: 2 Actual launch time: 2 Hit time: 14 Damage: 1500 (Hit)
-29/07/2018 15:09:14: 	Launcher destructor: plane Missile launcher: L101 was not destructed time: 14
-29/07/2018 15:09:16: 	Missile destructor: D201 Missile: M1 was not destructed, Damage: 1500 time: 16
-29/07/2018 15:09:19: 	Launcher destructor: shipA Missile launcher: L102 was not destructed (Hidden) time: 19
-29/07/2018 15:09:21: 	Launcher L101 launches Missile M2: desination: Beer-Sheva Expected Launch time: 5 Actual launch time: 14 Hit time: 21 Damage: 2000 (Hit)
-29/07/2018 15:09:24: 	Launcher destructor: shipA Missile launcher: L102 was not destructed (Hidden) time: 24
+08/08/2018 13:08:50: 	Missile destructor: D201 Missile: M4 was not destructed, Damage: 1000 time: 3
