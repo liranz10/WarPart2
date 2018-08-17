@@ -1,1 +1,4 @@
-08/08/2018 13:08:50: 	Missile destructor: D201 Missile: M4 was not destructed, Damage: 1000 time: 3
+17/08/2018 18:57:34: 	Launcher destructor: plane Missile launcher: L101 was destructed time: 4
+17/08/2018 18:57:37: 	Launcher L102 launches Missile M3: desination: Ofakim Expected Launch time: 4 Actual launch time: 4 Hit time: 7 (Missed)
+17/08/2018 18:57:42: 	Launcher L102 launches Missile M4: desination: Beer-Sheva Expected Launch time: 9 Actual launch time: 9 Destruction time: 12
+17/08/2018 18:57:42: 	Missile destructor: D201 Missile: M4 was destructed time: 12

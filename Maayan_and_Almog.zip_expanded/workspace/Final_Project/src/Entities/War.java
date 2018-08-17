@@ -29,7 +29,7 @@ MissileLauncherDestructorWithoutObjectInterface, StartGameWithoutWarInterface {
 	@JsonIgnore
 	private static boolean consoleGame = false;
 	@JsonIgnore
-	private WarInformation warInformation = new WarInformation();
+	private static WarInformation warInformation;
 	@JsonProperty("missileLaunchers")
 	private MissileLaunchers missileLaunchers = new MissileLaunchers();
 	@JsonProperty("missileDestructors")
@@ -49,7 +49,8 @@ MissileLauncherDestructorWithoutObjectInterface, StartGameWithoutWarInterface {
 		War war;
 		
 		try {
-			war = mapper.readValue(new File(filename), War.class);
+			File f = new File("C:\\Users\\Liran\\git\\WarPart2\\Maayan_and_Almog.zip_expanded\\workspace\\Final_Project\\properties.json");
+			war = mapper.readValue(f, War.class);
 		} catch (IOException e) {
 			war = new War();
 		}
@@ -65,12 +66,15 @@ MissileLauncherDestructorWithoutObjectInterface, StartGameWithoutWarInterface {
 
 		ApplicationContext  applicationContext = new ClassPathXmlApplicationContext("configType.xml");
 		dbService =(IDataService)applicationContext.getBean("theDBservice");
+		warInformation = (WarInformation)applicationContext.getBean("Info");
+		warInformation.init();
 		System.out.println("Would you like to load the game properties from a file? (yes/no)");
 		String shouldLoadFromFile = s.nextLine();
 
 		if (shouldLoadFromFile.equalsIgnoreCase("yes")) {
+		
 			war = loadWarGameFromJsonFile(
-					"C:\\Users\\win10\\git\\WarPart2\\Maayan_and_Almog.zip_expanded\\workspace\\Final_Project\\properties.json");
+					"/WarPart2/properties.json");
 			for (Launcher launcher : war.missileLaunchers.getLauncher()) {
 				dbService.getInstance().saveMissileLauncher(launcher.getId(), launcher.getIsHidden());
 				for (Missile missile : launcher.getMissile()) {

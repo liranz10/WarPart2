@@ -9,9 +9,10 @@
      http://www.springframework.org/schema/context/spring-context-3.0.xsd          
      http://www.springframework.org/schema/aop         
      http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
- 	<aop:aspectj-autoproxy>
-		<aop:include name="myLogger"/>
-	</aop:aspectj-autoproxy>
+	 <aop:aspectj-autoproxy>
+        <aop:include name="myLogger"/>
+    </aop:aspectj-autoproxy>
     <bean id="myLogger" class="Entities.MyLogger"/>
+    <bean id="Info" class="Entities.WarInformation"/>
     <bean id="theDBservice" class="DAL.MongoDataService"/>
 </beans>

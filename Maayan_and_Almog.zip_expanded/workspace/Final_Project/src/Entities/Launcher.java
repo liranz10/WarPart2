@@ -1,20 +1,25 @@
 package Entities;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import Interfaces.LoggerSetupInterface;
 import Interfaces.StartGameWithWarInterface;
-import com.fasterxml.jackson.annotation.*;
-
-import DAL.IDataService;
-
-import java.util.Observable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -23,7 +28,7 @@ import java.util.Observable;
     "missile"
 })
 @SuppressWarnings("deprecation")
-public class Launcher extends Observable implements LoggerSetupInterface, StartGameWithWarInterface {
+public class Launcher extends Observable implements  StartGameWithWarInterface {
 
     @JsonIgnore
     private static int idNumerator = 0;
@@ -95,6 +100,10 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
     public void setHit(boolean hit) {
         this.hit = hit;
     }
+    @Override
+    public String toString() {
+    	return id;
+    }
 
     public synchronized void launchAMissle(String destination) {
         Missile m = new Missile(destination);
@@ -104,8 +113,8 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
         missile.add(m);
         Collections.sort(missile);
         lock.unlock();
-        synchronized (missileLauncherThread) { //TODO: if there's one launcher for example, you can't add him several missiles to shoot. each time one.
-            missileLauncherThread.notify();
+        synchronized (getMissileLauncherThread()) { //TODO: if there's one launcher for example, you can't add him several missiles to shoot. each time one.
+            getMissileLauncherThread().notify();
         }
     }
 
@@ -143,12 +152,20 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
         missile = Collections.synchronizedList(missile == null ? new ArrayList<>() : missile);
         Collections.sort(missile);
         lock.unlock();
-        missileLauncherThread = new Thread(new MissileLauncherThread());
-        missileLauncherThread.start();
-        setupLoggerHandler();
+        setMissileLauncherThread(new Thread(new MissileLauncherThread()));
+        getMissileLauncherThread().start();
+        war.getWarInformation().setupLauncher(this);
     }
 
-    private class MissileLauncherThread implements Runnable {
+    public Thread getMissileLauncherThread() {
+		return missileLauncherThread;
+	}
+
+	public void setMissileLauncherThread(Thread missileLauncherThread) {
+		this.missileLauncherThread = missileLauncherThread;
+	}
+
+	private class MissileLauncherThread implements Runnable {
         @Override
         public void run() {
 
@@ -205,7 +222,7 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
                                 logMsg += " Hit time: " + hitTime + " (Missed)";
                             }
                             War.getDBservice().saveMissileResult(m.getId(),m.isHit());
-                            war.getWarInformation().getLogger().info(logMsg);
+                            war.getWarInformation().Launcherinfo(logMsg);
                         }
                     }
                 }
@@ -216,44 +233,9 @@ public class Launcher extends Observable implements LoggerSetupInterface, StartG
         }
     }
 
-    @Override
-    public void setupLoggerHandler() {
-        try {
-            FileHandler fh = new FileHandler(id + ".txt", false);
-            fh.setFilter(new LauncherFilter(this));
-            fh.setFormatter(new FormattedLoggerMessage());
-            war.getWarInformation().addLoggerHandler(fh);
+   
+    
 
-            if(War.isConsoleGame()) {
-                ConsoleHandler ch = new ConsoleHandler();
-                ch.setFilter(new LauncherFilter(this));
-                ch.setFormatter(new FormattedLoggerMessage());
-                war.getWarInformation().addLoggerHandler(ch);
-            }
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private class LauncherFilter implements Filter {
-
-        private Launcher launcher;
-
-        public LauncherFilter(Launcher launcher) {
-            this.launcher = launcher;
-        }
-
-        @Override
-        public boolean isLoggable(LogRecord rec) {
-            if (rec.getSourceClassName().equalsIgnoreCase("Entities.Launcher$MissileLauncherThread") &&
-                    rec.getThreadID() == launcher.missileLauncherThread.getId())
-                return true;
-            else
-                return false;
-        }
-
-    }
+   
 
 }

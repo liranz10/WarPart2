@@ -1,23 +1,20 @@
 package Entities;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
-import BL.GUIWarGameImpl;
-import DAL.IDataService;
-import DAL.MongoDataService;
-import Interfaces.LoggerSetupInterface;
-import Interfaces.StartGameWithWarInterface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.aspectj.lang.annotation.Aspect;
+
+import Interfaces.StartGameWithWarInterface;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -25,7 +22,7 @@ import org.aspectj.lang.annotation.Aspect;
     "destructedLauncher"
 })
 @SuppressWarnings("deprecation")
-public class Destructor_ extends Observable implements LoggerSetupInterface, StartGameWithWarInterface {
+public class Destructor_ extends Observable implements  StartGameWithWarInterface {
 
     public static enum eTYPES { SHIP, PLANE, TANK }
     @JsonIgnore
@@ -89,50 +86,20 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
             }
         }
     }
-
     @Override
-    public void setupLoggerHandler() {
-        try {
-            FileHandler fh = new FileHandler(type + ".txt");
-            fh.setFilter(new MissileLauncherDestructorFilter(this));
-            fh.setFormatter(new FormattedLoggerMessage());
-            war.getWarInformation().addLoggerHandler(fh);
-
-            if(War.isConsoleGame()) {
-                ConsoleHandler ch = new ConsoleHandler();
-                ch.setFilter(new MissileLauncherDestructorFilter(this));
-                ch.setFormatter(new FormattedLoggerMessage());
-                war.getWarInformation().addLoggerHandler(ch);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String toString() {
+    	return type;
     }
 
-    private class MissileLauncherDestructorFilter implements Filter {
+  
 
-        private Destructor_ destructor;
 
-        public MissileLauncherDestructorFilter(Destructor_ destructor) {
-            this.destructor = destructor;
-        }
-
-        @Override
-        public boolean isLoggable(LogRecord rec) {
-            if (rec.getSourceClassName().equalsIgnoreCase("Entities.Destructor_$MissileLauncherDestructorThread") &&
-                    rec.getMessage().contains(destructor.getType()))
-                return true;
-            else
-                return false;
-        }
-
-    }
 
     @Override
     public void startGame(Observer observer, War war) {
         this.war = war;
-        setupLoggerHandler();
+        
+        war.getWarInformation().setupDestructor_(this);
         addObserver(observer);
         lock.lock();
         destructedLauncher = Collections.synchronizedList(destructedLauncher == null ? new ArrayList<>() : destructedLauncher);
@@ -182,9 +149,9 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
                             Destructor_.this.setChanged();
                             Destructor_.this.notifyObservers(dl);
 
-                            Thread.currentThread().sleep(flyTime * war.MILLISECOND_IN_SECOND);
+                            Thread.sleep(flyTime * War.MILLISECOND_IN_SECOND);
 
-                            launcherDestructorStart(getType(),launcher.getId());
+                            logMsg = "Launcher destructor: " + type + " Missile launcher: " + launcher.getId();
 
                             if (!launcher.getIsHidden() && !launcher.isHit() && Math.random() > 0.3) {
                                 dl.setHit(true);
@@ -202,7 +169,7 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
                                 logMsg += " was not destructed (Hidden) time: " + War.timeSinceGameStartedInSeconds();
                             }
 
-                            war.getWarInformation().getLogger().info(logMsg);
+                            war.getWarInformation().Destructor_info(logMsg);
                             War.getDBservice().saveDestructLauncherResult(dl.getId(),getType(),dl.getDestructTime(),dl.isHit());
 
                         }
@@ -213,12 +180,7 @@ public class Destructor_ extends Observable implements LoggerSetupInterface, Sta
                 }
             }
         }
-		private void launcherDestructorStart(String type, String id) {
-			
-            logMsg = "Launcher destructor: " + type + " Missile launcher: " + id;
-            System.out.println(logMsg);
-			
-		}
+	
     }
 
 

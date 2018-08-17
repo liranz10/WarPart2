@@ -1,0 +1,1 @@
+17/08/2018 18:57:34: 	Launcher destructor: plane Missile launcher: L101 was destructed time: 4

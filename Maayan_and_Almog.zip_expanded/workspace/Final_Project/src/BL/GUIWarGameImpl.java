@@ -1,20 +1,37 @@
 package BL;
 
-import Entities.*;
+import static BL.GUIWarGameImpl.eDirection.LEFT;
+import static BL.GUIWarGameImpl.eDirection.RIGHT;
+import static Entities.War.create;
+import static Entities.War.timeSinceGameStartedInSeconds;
+import static Entities.WarInformation.eCALLER_FUNCTION.INCREMENT_MISSILES_LAUNCHERS_DESTRUCTED;
+
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Optional;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import Entities.DestructedLauncher;
+import Entities.Destructor;
+import Entities.Destructor_;
+import Entities.Launcher;
+import Entities.Missile;
+import Entities.War;
 import GameServer.WarListener;
 import GameServer.WarServer;
 import Interfaces.AnimationParametersInterface;
 import Interfaces.AnimationsInterface;
 import Interfaces.WarGameInterface;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -25,17 +42,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static BL.GUIWarGameImpl.eDirection.LEFT;
-import static BL.GUIWarGameImpl.eDirection.RIGHT;
-import static Entities.War.create;
-import static Entities.War.timeSinceGameStartedInSeconds;
-import static Entities.WarInformation.eCALLER_FUNCTION.*;
 
 public class GUIWarGameImpl extends Application implements WarGameInterface, AnimationsInterface,WarListener {
 
@@ -393,7 +399,10 @@ public class GUIWarGameImpl extends Application implements WarGameInterface, Ani
         mainGrid.add(image, 4, launcherIndex % MAX_NUMBER_OF_ROWS);
 
         if(launcherIndex == MAX_NUMBER_OF_ROWS - 1) {
-            war.getWarInformation().getLogger().info("game over ! end of game "+ timeSinceGameStartedInSeconds());
+            war.getWarInformation().Destructor_info("game over ! end of game "+ timeSinceGameStartedInSeconds());
+            war.getWarInformation().Destructorinfo("game over ! end of game "+ timeSinceGameStartedInSeconds());
+            war.getWarInformation().Launcherinfo("game over ! end of game "+ timeSinceGameStartedInSeconds());
+
             gameOver();
             war.setGameOver(true);
         }
