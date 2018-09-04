@@ -16,20 +16,25 @@ public class SqlDataService implements IDataService {
 
 	private SqlDataService() {
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/war?user=root&password=adva6767");
-			// reset db
-//		    PreparedStatement stmt = conn.prepareStatement("SELECT Concat('TRUNCATE TABLE ',table_schema,'.',TABLE_NAME, ';') as Command \r\n" + 
-//		    		"FROM INFORMATION_SCHEMA.TABLES where  table_schema in ('war');");
-//		    ResultSet rs = stmt.executeQuery();
-//		    while(rs.next()) {
-//		     conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0; "+rs.getString("Command")+" SET FOREIGN_KEY_CHECKS = 1;").executeUpdate();
-//		    			
-//		    }
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/war?user=root&password=");
+			resetDB();
+		    
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
+	}
+
+	private void resetDB() throws SQLException {
+
+	     conn.prepareStatement("DELETE FROM `destructdmissilesconn` WHERE 1").executeUpdate();
+	     conn.prepareStatement("DELETE FROM `destructedlauncherconn` WHERE 1").executeUpdate();
+	     conn.prepareStatement("DELETE FROM `missile` WHERE 1").executeUpdate();
+	     conn.prepareStatement("DELETE FROM `missiledestructors` WHERE 1").executeUpdate();
+	     conn.prepareStatement("DELETE FROM `missilelauncherdestructors` WHERE 1").executeUpdate();
+	     conn.prepareStatement("DELETE FROM `missilelaunchers` WHERE 1").executeUpdate();
+		
 	}
 
 	public  IDataService getInstance() {

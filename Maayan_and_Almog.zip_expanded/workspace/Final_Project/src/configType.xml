@@ -14,5 +14,5 @@
     </aop:aspectj-autoproxy>
     <bean id="myLogger" class="Entities.MyLogger"/>
     <bean id="Info" class="Entities.WarInformation"/>
-    <bean id="theDBservice" class="DAL.MongoDataService"/>
+    <bean id="theDBservice" class="DAL.SqlDataService"/>
 </beans>
